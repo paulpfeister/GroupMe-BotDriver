@@ -95,11 +95,23 @@ def logmsg(data):
         elif sender_type == 'bot':
             print(errcol.botmsg + "{}: {}{}".format(data['name'], attach_type(data['attachments']) ,data['text']) + errcol.tail)
 
-def send_message(msg, bot_id):
-    data = {
-            'bot_id' : bot_id,
-            'text' : msg,
-            }
+def send_message(msg, bot_id, img_url):
+    if img_url != "":
+        data = {
+            'bot_id': bot_id,
+            'text': msg,
+            'attachments': [
+                {
+                    'type': "image",
+                    'url': img_url
+                }
+            ]
+        }
+    else:
+        data = {
+            'bot_id': bot_id,
+            'text': msg,
+        }
     requests.post(POST_TO, json=data)
 
 #######################################################################################################
